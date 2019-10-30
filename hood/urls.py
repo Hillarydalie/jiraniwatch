@@ -18,9 +18,11 @@ urlpatterns = [
     path('edit/',main_views.edit,name='edit'),
     url(r'^profile/(?P<profile_id>[-\w]+)/$', main_views.profile, name='profile'),
     path('new/business/',main_views.business,name='business'),
-    path('hood/',main_views.neighbourhood,name='neighbourhood'),
+    path('hood/',main_views.neighbourhood, name='neighbourhood'),
     path('business/',main_views.bizdisplay,name='bizdisplay'),
-    path('neighbourhood_display/', main_views.mtaadisplay, name='displayhood'),
+    path('neighbourhood_display/',main_views.mtaadisplay,name='displayhood'),
+    path('joinhood/',main_views.join,name='joinhood'),
+    path('exithood/',main_views.exitHood,name='exithood'),
 
 ]
 
