@@ -1,12 +1,13 @@
 {%extends 'all/base.html'%} 
+{% load static %}
 {% block content %} 
 {{bock.super}}
 <div class="row">
     <div class="col-md-3 col-md-offset-2">
-        <img src="media/profilepic/mtaa.jpg" alt="logo">
+        <img src="static/images/jirani.png" alt="logo">
     </div>
     <div class="col-md-7">
-        <h3 style="text-align: left; font-size: xx-large">Mtaa Mentality</h3>
+        <h3 style="text-align: left; font-size: xx-large">Jirani</h3>
     </div>
 </div>
 
@@ -31,30 +32,67 @@
 </div>
 <hr>
 <div class="row">
-<h3 style="text-align: center">Hood's Public Ammenities</h3>
-    {% for public in public %}
-    <div class="col-md-4">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{public.ammenityName|upper}}</h3>
-            </div>
-            <div class="panel-body">
-                {{public.location}}
-            </div>
-            <div class="panel-body">
-                {{public.description}}
-            </div>
-            <div class="panel-body">
-                {{public.address}}
-            </div>
-            <div class="panel-footer">
-                {{public.hood}}
+<h3 style="text-align: center">Hood's Businesses</h3>
+  {% for bizdisplay in biz %}
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{bizdisplay.business_name|upper}}</h3>
+                </div>
+                <div class="panel-body">
+                    {{bizdisplay.description_of_biz}}
+                </div>
+                <div class="panel-body">
+                    {{bizdisplay.location}}
+                </div>
+                <div class="panel-body">
+                    {{bizdisplay.email}}
+                </div>
+                <div class="panel-footer">{{bizdisplay.hood}}</div>
             </div>
         </div>
-    </div>
     {% endfor %}
-
 </div>
+</div>
+
+<div class="container">
+    <div class="row">
+    <h3 style="text-align: center">Hood's Registered</h3>
+      {% for displayhood in hoods %}
+            <!-- "hoods" in the above line of code refers to the "hoods" passed in, in my views-->
+            <div class="col-md-4">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{displayhood.hoodName|upper}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {{displayhood.hoodLocation}}
+                    </div>
+                    <div class="panel-body">
+                        Last number of registered occupants as per the census is: {{displayhood.occupantsCount}}
+                    </div>
+                    <!-- <div class="panel-body">
+                        Join this Neighbourhood
+                        <a href="joinhood/">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        Exit this Neighbourhood
+                        <a href="exithood/">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
+                    </div> -->
+                    <div class="panel-footer">
+                        Neighbourhood created by: {{displayhood.admin}}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+    </div>
+</div>
+
+
 </div>
 
 {% endblock %}
