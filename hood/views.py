@@ -20,10 +20,10 @@ def index(request):
     '''
     View function that displays the homepage and all its contents including social ammenitits and hoods notices
     '''
-    # post = Post.objects.all()
-    return render(request, 'all/index.html', 
-        # {"post": post}
-        )
+    post = Post.objects.all()
+    biz = Business.objects.all()
+    hoods = Hood.objects.all()
+    return render(request, 'all/index.html', {"post": post, "biz": biz[::-1], "hoods":hoods} )
 
 
 # @login_required(login_url='/accounts/login/')
@@ -55,7 +55,6 @@ def signup(request):
             return redirect('/')
             user.set_password(user.password)
             user.save()
-            # user.save()
     else:
         form = SignUpForm()
     return render(request, 'user/signup.html', {'form': form})
@@ -68,8 +67,8 @@ def new_post(request):
     if request.method == 'POST':
         form = NewPostForm(request.POST, request.FILES)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.user = current_user
+            post = form.save()
+            post.user = request.user
             post.save()
             return redirect('/')
     else:
@@ -104,7 +103,7 @@ def edit(request):
         form = EditProfile(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             current_user = request.user
-            profile = form.save(commit=False)
+            profile = form.save(    )
             profile.user = request.user
             profile.save()
             return redirect('profile/', current_user.id)
@@ -121,7 +120,7 @@ def business(request):
     if request.method == 'POST':
         form = NewBusinessForm(request.POST)
         if form.is_valid():
-            business = form.save(commit=False)
+            business = form.save()
             business.user = current_user
             business.save()
             return redirect('/')
@@ -135,7 +134,7 @@ def neighbourhood(request):
     if request.method == 'POST':
         form = NewHoodForm(request.POST)
         if form.is_valid():
-            hood = form.save(commit=False)
+            hood = form.save()
             hood.user = current_user
             hood.save()
             return redirect('/')
@@ -149,7 +148,7 @@ def neighbourhood(request):
 # @login_required(login_url='/accounts/login/')
 def bizdisplay(request):
     biz = Business.objects.all()
-    return render(request, 'all/bizdisplay.html', {"biz": biz})
+    return render(request, 'all/bizdisplay.html', {"biz": biz[::-1]})
 
 # View function that displays all listed neighbourhoods
 
@@ -157,7 +156,7 @@ def bizdisplay(request):
 # @login_required(login_url='/accounts/login/')
 def mtaadisplay(request):
     hoods = Hood.objects.all()
-    return render(request, 'all/displayhood.html', {"hoods": hoods})
+    return render(request, 'all/displayhood.html', {"hoods": hoods[::-1]})
 
 
 def join(request, hoodId):
@@ -169,12 +168,12 @@ def join(request, hoodId):
         messages.success(
             request, 'Welcome. You are now a member of this Neighbourhood')
         Join.objects.filter(user_id=request.user).update(hood_id=neighbourhood)
-        return redirect('/neighbourhood_display/')
+        return redirect('/')
     else:
         messages.success(
             request, 'Welcome. You are now a member of this Neighbourhood')
         Join(user_id=request.user, hood_id=neighbourhood).save()
-        return redirect('/neighbourhood_display/')
+        return redirect('/')
 
 
 def exitHood(request, hoodId):
@@ -184,4 +183,4 @@ def exitHood(request, hoodId):
     if Join.objects.filter(user_id=request.user).exists():
         Join.objects.get(user_id=request.user).delete()
 
-        return redirect('homepage')
+        return redirect('/')
