@@ -1,5 +1,5 @@
 {%extends 'all/base.html'%} 
-{% load bootstrap3 %} 
+{% load bootstrap4 %} 
 {% block content %} 
 {{bock.super}}
 
@@ -14,7 +14,7 @@
 
     <div class="col-md-8 col-lg-8">
 
-        <form action="{% url 'business' %}" method="post">
+        <form method="post">
 
             {% csrf_token %} {% bootstrap_form form %}
 
