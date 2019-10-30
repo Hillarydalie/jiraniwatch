@@ -1,6 +1,6 @@
 # JIRANI
 
-This is a clone Awwwards. Awwwards is a web rating system to rate projects on the web. You will be able to do this, I wanted to test my skills in django by building a clone of awwwards using my knowledge in Django, a python framework. The application is accessible on both mobile and desktop version. Your comments and feedback are highly welcome.
+Neighbourhood is a web application that allows users to be in the loop of what is going on in their neighborhood. The user login and creates their profile which determines the kind of information they get depending their neighbourhood.Your comments and feedback are highly welcome.
 
 
 ## Features (User Stories)
